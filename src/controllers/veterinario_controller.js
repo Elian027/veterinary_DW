@@ -32,7 +32,7 @@ const registro = async (req,res)=>{
     if(verificarEmailBDD) return res.status(400).json({msg:"Lo sentimos, el email ya se encuentra registrado"})
     //CREAR LA INSTANCIA DEL MODELO
     const nuevoVeterinario = new Veterinario(req.body)
-    //ENCRIPTAR EL PASSWORD
+    //ENCRIPTAR EL PASSWORD 
     nuevoVeterinario.password = await nuevoVeterinario.encrypPassword(password)
     const token = nuevoVeterinario.crearToken()
     await sendMailToUser(email,token)
