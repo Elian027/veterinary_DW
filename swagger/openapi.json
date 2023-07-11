@@ -1,0 +1,692 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API de Veterinaria",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/login": {
+        "post": {
+          "summary": "Iniciar sesión de un veterinario",
+          "tags": [
+            "Veterinarios"
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Inicio de sesión exitoso",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "token": {
+                        "type": "string"
+                      },
+                      "nombre": {
+                        "type": "string"
+                      },
+                      "apellido": {
+                        "type": "string"
+                      },
+                      "direccion": {
+                        "type": "string"
+                      },
+                      "telefono": {
+                        "type": "string"
+                      },
+                      "_id": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Cuenta de correo electrónico no verificada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, el usuario no se encuentra registrado"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Error al iniciar sesión",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, el password no es el correcto"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/registro": {
+        "post": {
+          "summary": "Registrar un nuevo veterinario",
+          "tags": [
+            "Veterinarios"
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Registro exitoso",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Revisa tu correo electrónico para confirmar tu cuenta"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al registrar",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, debes llenar todos los campos"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "409": {
+              "description": "Email ya registrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, el email ya se encuentra registrado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/confirmar/{token}": {
+        "get": {
+          "summary": "Confirmar correo electrónico de un veterinario",
+          "tags": [
+            "Veterinarios"
+          ],
+          "parameters": [
+            {
+              "name": "token",
+              "in": "path",
+              "description": "Token de confirmación de correo electrónico",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Token confirmado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Token confirmado, ya puedes iniciar sesión"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "No se puede validar la cuenta",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, no se puede validar la cuenta"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Cuenta ya confirmada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "La cuenta ya ha sido confirmada"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/veterinarios": {
+        "get": {
+          "summary": "Obtener lista de veterinarios",
+          "tags": [
+            "Veterinarios"
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de veterinarios obtenida exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "res": {
+                        "type": "string",
+                        "example": "lista de veterinarios registrados"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/recuperar-password": {
+        "post": {
+          "summary": "Solicitar recuperación de contraseña",
+          "tags": [
+            "Veterinarios"
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Solicitud de recuperación de contraseña enviada exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Revisa tu correo electrónico para reestablecer tu cuenta"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al solicitar recuperación de contraseña",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, debes llenar todos los campos"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Error al solicitar recuperación de contraseña",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, el usuario no se encuentra registrado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/nuevo-password/{token}": {
+        "post": {
+          "summary": "Establecer una nueva contraseña",
+          "tags": [
+            "Veterinarios"
+          ],
+          "parameters": [
+            {
+              "name": "token",
+              "in": "path",
+              "description": "Token de recuperación de contraseña",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "password": {
+                      "type": "string"
+                    },
+                    "confirmpassword": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Contraseña actualizada exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Felicitaciones, ya puedes iniciar sesión con tu nuevo password"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al establecer la nueva contraseña",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, debes llenar todos los campos"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No se puede validar la cuenta",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, no se puede validar la cuenta"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/perfil": {
+        "get": {
+          "summary": "Obtener perfil de un veterinario autenticado",
+          "tags": [
+            "Veterinarios"
+          ],
+          "responses": {
+            "200": {
+              "description": "Perfil del veterinario obtenido exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "nombre": {
+                        "type": "string"
+                      },
+                      "apellido": {
+                        "type": "string"
+                      },
+                      "direccion": {
+                        "type": "string"
+                      },
+                      "telefono": {
+                        "type": "string"
+                      },
+                      "_id": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No se puede validar la cuenta",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, debes proporcionar un token"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/veterinario/actualizarpassword": {
+        "put": {
+          "summary": "Actualizar contraseña de un veterinario autenticado",
+          "tags": [
+            "Veterinarios"
+          ],
+          "responses": {
+            "200": {
+              "description": "Contraseña del veterinario actualizada exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "res": {
+                        "type": "string",
+                        "example": "actualizar password de un veterinario registrado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/veterinario/{id}": {
+        "get": {
+          "summary": "Obtener detalles de un veterinario por su ID",
+          "tags": [
+            "Veterinarios"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID del veterinario",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Detalles del veterinario obtenidos exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "nombre": {
+                        "type": "string"
+                      },
+                      "apellido": {
+                        "type": "string"
+                      },
+                      "direccion": {
+                        "type": "string"
+                      },
+                      "telefono": {
+                        "type": "string"
+                      },
+                      "_id": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID no válido",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, debe ser un id válido"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No se encuentra el veterinario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, no existe el veterinario {id}"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Actualizar perfil de un veterinario",
+          "tags": [
+            "Veterinarios"
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID del veterinario",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nombre": {
+                      "type": "string"
+                    },
+                    "apellido": {
+                      "type": "string"
+                    },
+                    "direccion": {
+                      "type": "string"
+                    },
+                    "telefono": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Perfil del veterinario actualizado exitosamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Perfil actualizado correctamente"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Error al actualizar el perfil del veterinario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, debes llenar todos los campos"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "No se encuentra el veterinario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "msg": {
+                        "type": "string",
+                        "example": "Lo sentimos, no existe el veterinario {id}"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

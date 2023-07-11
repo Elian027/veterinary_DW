@@ -23,7 +23,7 @@ const sendMailToUser = async(userMail,token)=>{
     <hr>
     <a href="http://localhost:3000/api/confirmar/${token}">Clic para confirmar tu cuenta</a>
     <hr>
-    <footer>Grandote te da la Bienvenida!</footer>
+    <footer>La veterinaria te da la Bienvenida!</footer>
     `
     });
     console.log("Mensaje enviado satisfactoriamente: ", info.messageId);
